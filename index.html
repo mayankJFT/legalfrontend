@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NyayaGPT • Futuristic Legal AI</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Onboarding Loader -->
+  <div class="onboarding-loader" id="onboarding-loader">
+    <div class="loader-content">
+      <h1 class="loader-logo">NyayaGPT</h1>
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Initializing Legal AI…</p>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+          <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+      </button>
+      <div class="app-title-container">
+        <h1 class="app-title">NyayaGPT</h1>
+        <span class="app-subtitle">Futuristic Legal AI</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+        <!-- Sun Icon -->
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m16.24-6.24l-4.24 4.24m-6 6l-4.24 4.24m0-10.48l4.24 4.24m6 6l4.24 4.24" />
+        </svg>
+        <!-- Moon Icon (hidden by default) -->
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" style="display: none;">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+      <button class="icon-btn" id="settings-btn" aria-label="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3m16.24-6.24l-4.24 4.24m-6 6l-4.24 4.24m0-10.48l4.24 4.24m6 6l4.24 4.24" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" role="navigation">
+    <div class="sidebar-header">
+      <button class="new-session-btn" id="new-session-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+          <path d="M12 5v14m-7-7h14" />
+        </svg>
+        New Session
+      </button>
+    </div>
+    <div class="sidebar-content">
+      <h3 class="conversations-header">Conversations</h3>
+      <ul class="history-list" id="history-list" role="list" aria-label="Conversation history">
+        <!-- JavaScript will inject <li> items here -->
+      </ul>
+    </div>
+    <div class="sidebar-footer">
+      <button class="clear-cache-btn" id="clear-cache-btn">Clear Cache</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="chat-container">
+      <div class="messages-container" id="messages" role="log" aria-live="polite">
+        <div class="welcome-message">
+          <h2>Welcome to NyayaGPT</h2>
+          <p>Your futuristic legal AI assistant.</p>
+          <p>Ask me anything about cases, statutes, or precedents!</p>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <textarea
+          id="query-input"
+          class="query-input"
+          placeholder="Type your legal question…"
+          rows="1"
+          aria-label="Query input"
+        ></textarea>
+        <button id="send-btn" class="send-btn" aria-label="Send message">
+          <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+          </svg>
+        </button>
+        <div class="input-info">
+          <span class="char-count" id="char-count">0 chars</span>
+          <span class="model-info" id="model-info">Model: –</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settings-modal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close" id="settings-close" aria-label="Close settings">
+          <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-group">
+          <label for="default-model">Default Model</label>
+          <select id="default-model" class="settings-select"></select>
+        </div>
+        <div class="settings-group">
+          <label for="default-strategy">Default Strategy</label>
+          <select id="default-strategy" class="settings-select">
+            <option value="simple">Simple</option>
+            <option value="fusion">Fusion</option>
+          </select>
+        </div>
+        <div class="settings-group">
+          <label for="default-temperature">Temperature</label>
+          <div class="temperature-control">
+            <input type="range" id="default-temp-slider" min="0" max="1" step="0.1" value="0.2" />
+            <input type="number" id="default-temperature" min="0" max="1" step="0.1" value="0.2" />
+          </div>
+        </div>
+        <div class="settings-group">
+          <label for="max-tokens">Max Tokens</label>
+          <input type="number" id="max-tokens" min="100" max="10000" step="100" value="2048" />
+        </div>
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="streaming-enabled" checked />
+            Enable Streaming
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="settings-cancel">Cancel</button>
+        <button class="btn btn-primary" id="settings-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div class="modal-overlay" id="delete-modal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Confirm Deletion</h2>
+        <button class="modal-close" id="delete-close" aria-label="Close delete modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this message?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="delete-cancel">Cancel</button>
+        <button class="btn btn-danger" id="delete-confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION NAME MODAL (shown when no conversation_id cookie exists) -->
+  <div class="modal-overlay" id="session-name-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Name Your Chat</h2>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          id="session-name-input"
+          placeholder="Enter a name for this conversation"
+          maxlength="50"
+          style="
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: var(--font-size-base);
+          "
+        />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="session-name-save">Start Chat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading-overlay" id="loading-overlay" style="display: none;">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- MAIN SCRIPT -->
+  <script src="app.js"></script>
+</body>
+</html>
