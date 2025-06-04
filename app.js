@@ -1,5 +1,5 @@
 // ===== Global Variables & State =====
-const API_BASE_URL = 'http://localhost:8000'; // Adjust if backend runs elsewhere
+const API_BASE_URL = 'https://legalbackend-hhhq.onrender.com'; // Adjust if backend runs elsewhere
 let selectedModel = '';
 let selectedStrategy = 'simple';
 let temperatureValue = 0.2;
