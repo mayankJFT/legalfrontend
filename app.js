@@ -1,5 +1,5 @@
 // ===== Global Variables & State =====
-const API_BASE_URL = 'https://legalbackend-29ar.onrender.com'; // Adjust if backend runs elsewhere
+const API_BASE_URL = 'http://34.55.217.118'; // Adjust if backend runs elsewhere
 let selectedModel = '';
 let selectedStrategy = 'simple';
 let temperatureValue = 0.2;
